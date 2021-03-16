@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ponteareas_bus_finder">
+    package="com.pedrorg.ponteareas_bus_finder">
    <application
         android:label="Autobuses Ponteareas"
         android:icon="@mipmap/ic_launcher">

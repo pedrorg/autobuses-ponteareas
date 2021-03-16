@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:ponteareas_bus_finder/widgets/route_selector.dart';
+import 'package:ponteareas_bus_finder/presentation/providers/bus_stop_provider.dart';
+import 'package:ponteareas_bus_finder/presentation/widgets/route_selector.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var busStops = context.watch<BusStopProvider>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -16,7 +19,7 @@ class HomePage extends StatelessWidget {
                 image: AssetImage('./assets/logo.png'),
               ),
             ),
-            RouteSelector()
+            RouteSelector(busStops: busStops.busStops)
           ],
         ),
       ),
