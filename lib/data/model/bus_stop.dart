@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 
 typedef StopPressedCallback = void Function(String stopId);
+
+BusStop busStopFromMap(String str) => BusStop.fromMap(json.decode(str));
+
+//String busStopToMap(BusStop busStop) => json.encode(busStop.toMap());
 
 class BusStop {
   String name;

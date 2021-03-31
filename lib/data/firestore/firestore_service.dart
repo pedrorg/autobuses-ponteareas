@@ -15,10 +15,6 @@ class FirestoreService {
               busStops.add(BusStop.fromMap(element.data()));
             }));
 
-    for (int i = 0; i < busStops.length; i++) print(busStops[i].name);
-
-    print("Adios");
-
     return busStops;
   }
 

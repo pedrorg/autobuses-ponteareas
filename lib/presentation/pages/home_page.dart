@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var busStops = context.watch<BusStopProvider>();
+    var stops = context.watch<BusStopProvider>();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
                 image: AssetImage('./assets/logo.png'),
               ),
             ),
-            RouteSelector(busStops: busStops.busStops)
+            RouteSelector(key: UniqueKey(), busStops: stops.busStops),
           ],
         ),
       ),

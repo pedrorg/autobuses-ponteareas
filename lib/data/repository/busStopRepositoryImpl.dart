@@ -8,7 +8,21 @@ class BusStopRepositoryImpl extends BusStopRepository {
   BusStopRepositoryImpl(this._firestoreService)
       : assert(_firestoreService != null);
 
+  @override
   Future<List<BusStop>> getBusStops() async {
-    return _firestoreService.getStops();
+    var stops = await _firestoreService.getStops();
+    return stops;
+  }
+
+  @override
+  Future<List<String>> getBusStopsNames() async {
+    var stopsNames;
+    var stops = await _firestoreService.getStops();
+
+    stops.forEach((element) {
+      stopsNames.add(element.name);
+    });
+
+    return stopsNames;
   }
 }

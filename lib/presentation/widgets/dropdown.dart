@@ -1,115 +1,55 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ponteareas_bus_finder/data/model/bus_stop.dart';
-import 'package:provider/provider.dart';
 
 class Dropdown extends StatefulWidget {
-  final String _labelText;
-  final String _defaultValue;
-  final List<BusStop> _busStops;
+  const Dropdown({Key key, this.busStops, this.labelText, this.defaultValue})
+      : super(key: key);
 
-  final Function(String) valueReturned;
-
-  Dropdown(
-      {Key key,
-      String labelText,
-      this.valueReturned,
-      String defaultValue,
-      List<BusStop> busStops})
-      : _labelText = labelText,
-        _defaultValue = defaultValue,
-        _busStops = busStops,
-        super(key: key);
+  final List<BusStop> busStops;
+  final String labelText;
+  final BusStop defaultValue;
 
   @override
-  _DropdownState createState() => _DropdownState(
-      dropdownLabelText: _labelText,
-      defaultValue: _defaultValue,
-      busStops: _busStops);
+  _DropdownState createState() =>
+      _DropdownState(busStops, labelText, defaultValue);
 }
 
+/// This is the private State class that goes with Dropdown.
 class _DropdownState extends State<Dropdown> {
-  String _dropdownValue;
-  String _dropdownlabelText;
-  String dropdownItem;
-  String _defaultValue;
-  List<BusStop> _busStops;
+  //String dropdownValue = 'One';
+  BusStop busStopSelected;
+  BusStop defaultBusStop;
+  final List<BusStop> _busStops;
+  String _labelText;
 
-  _DropdownState(
-      {@required String dropdownLabelText,
-      @required String defaultValue,
-      @required List<BusStop> busStops}) {
-    //_currentSubscription = data.loadAllStops().listen(_updateStops);
-    _dropdownlabelText = dropdownLabelText;
-    _defaultValue = defaultValue;
-    _busStops = busStops;
-  }
-
-  StreamSubscription<QuerySnapshot> _currentSubscription;
-  bool _isLoading = true;
-  List<BusStop> _stops;
-  List<String> stops;
-  //Filter _filter;
-
-  List<String> getBusStopsNames(List<BusStop> busStops) {
-    List<String> _busStopsNames = <String>[];
-
-    for (int i = 0; i < busStops.length; i++) {
-      _busStopsNames.add(busStops[i].name);
-    }
-
-    return _busStopsNames;
-  }
-
-  void getDropDownItem() {
-    dropdownItem = _dropdownValue;
-  }
-
-  void _updateStops(QuerySnapshot snapshot) {
-    setState(() {
-      _isLoading = false;
-      //_stops = data.getStopsFromQuery(snapshot);
-    });
-  }
+  _DropdownState(this._busStops, this._labelText, this.busStopSelected);
 
   @override
   Widget build(BuildContext context) {
-    stops = getBusStopsNames(_stops);
-    return DropdownButtonFormField<String>(
-      value: _defaultValue,
-      //icon: Icon(Icons.arrow_downward),
+    return DropdownButtonFormField<BusStop>(
+      value: busStopSelected,
       decoration: InputDecoration(
           enabledBorder:
               UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
           filled: false,
-          labelText: _dropdownlabelText),
+          labelText: _labelText),
       iconSize: 0,
       elevation: 16,
       style: TextStyle(
           color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
-      onChanged: (String newValue) {
+      onChanged: (BusStop newValue) {
         setState(() {
-          _dropdownValue = newValue;
-          widget.valueReturned(newValue);
+          busStopSelected = newValue;
+          //widget.valueReturned(newValue);
         });
       },
-      items: _isLoading && stops == null && stops.isNotEmpty
-          ? <String>['Ponteareas', 'Porriño', 'Vigo', 'Meixoeiro']
-              .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList()
-          : stops.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+      items: _busStops.map<DropdownMenuItem<BusStop>>((BusStop value) {
+        return DropdownMenuItem<BusStop>(
+          value: value,
+          child: Text(value.name),
+        );
+      }).toList(),
     );
   }
 }
