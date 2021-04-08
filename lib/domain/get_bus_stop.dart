@@ -10,15 +10,4 @@ class GetBusStop {
     var busStops = await _busStopRepository.getBusStops();
     return busStops;
   }
-
-  Future<List<String>> getBusStopsNames() async {
-    var busStopsNames;
-    var busStops = await _busStopRepository.getBusStops();
-
-    busStops.forEach((element) {
-      busStopsNames.add(element.name);
-    });
-
-    return busStopsNames;
-  }
 }

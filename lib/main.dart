@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:ponteareas_bus_finder/di/injector.dart';
 import 'package:ponteareas_bus_finder/presentation/pages/home_page.dart';
 import 'package:ponteareas_bus_finder/presentation/providers/bus_stop_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -26,6 +27,12 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Autobuses Ponteareas',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [const Locale('es')],
+        locale: Locale('es'),
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
